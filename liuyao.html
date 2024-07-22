@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>六爻起卦占卜</title>
+    <style>
+        body {
+            text-align: center;
+        }
+
+        table {
+            width: 30%;
+            min-width: 300px;
+            margin: 0 auto;
+            border-collapse: collapse;
+        }
+
+        table,
+        th,
+        td {
+            border: 0px solid black;
+        }
+
+        th,
+        td {
+            padding: 15px;
+            text-align: center;
+        }
+
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        #result {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        #original-context {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+    <script>
+        function validateAndSubmit() {
+            const selects = document.querySelectorAll('select');
+            let originalMatrix = [];
+
+            for (let i = 0; i < selects.length; i++) {
+                const select = selects[i];
+                if (select.value === "") {
+                    alert("请填入抛硬币的所有结果");
+                    return;
+                }
+                originalMatrix.push(parseInt(select.value));
+            }
+            const originalYao = originalMatrix.map(item => item * 3 + (3 - item) * 2);
+            const reserseYaoForZong = originalYao.slice().reverse();
+            const huguayao = [originalYao[1], originalYao[2], originalYao[3], originalYao[2], originalYao[3], originalYao[4]]
+
+            var benxia = 0;
+            var benshang = 0;
+            var huxia = 0;
+            var hushang = 0;
+            var cuoxia = 0;
+            var cuoshang = 0;
+            var zongxia = 0;
+            var zongshang = 0;
+
+            var bianxia = 0;
+            var bianshang = 0;
+
+            var dongYaoCount = 0;
+
+            originalYao.forEach((item, i) => {
+                if (item === 6 || item === 9) {
+                    dongYaoCount++;
+                }
+                if (i <= 2) {
+                    benxia = (benxia << 1) | (item % 2 === 1 ? 0 : 1);
+                    cuoxia = (cuoxia << 1) | (item % 2 === 1 ? 1 : 0);
+                    bianxia = (bianxia << 1) | (item >= 8 ? 1 : 0);
+                } else {
+                    benshang = (benshang << 1) | (item % 2 === 1 ? 0 : 1);
+                    cuoshang = (cuoshang << 1) | (item % 2 === 1 ? 1 : 0);
+                    bianshang = (bianshang << 1) | (item >= 8 ? 1 : 0);
+                }
+            });
+
+            var dongYaoIdx = -1;
+            switch (dongYaoCount) {
+                case 1:
+                    originalYao.forEach((item, i) => {
+                        if (item === 6 || item === 9) {
+                            dongYaoIdx = i;
+                        }
+                    });
+                    break;
+                case 2:
+                    xiaDong = -1;
+                    for (let i = 0; i < originalYao.length; i++) {
+                        if (originalYao[i] === 6 || originalYao[i] === 9) {
+                            if (xiaDong === -1) {
+                                xiaDong = i;
+                            } else {
+                                if ((originalYao[i] === 6 && originalYao[xiaDong] === 6) || (originalYao[i] === 9 && originalYao[xiaDong] === 9)) {
+                                    dongYaoIdx = i;
+                                } else {
+                                    dongYaoIdx = originalYao[i] === 6 ? i : xiaDong;
+                                }
+                            }
+
+                        }
+                    }
+                    break;
+                case 3:
+                    for (let i = 0; i < originalYao.length; i++) {
+                        if (originalYao[i] === 6 || originalYao[i] === 9) {
+                            if (dongYaoCount > -1) {
+                                dongYaoIdx = i;
+                                break;
+                            } else {
+                                dongYaoIdx = i;
+                            }
+                        }
+                    }
+                    break;
+                case 4:
+                case 5:
+                    for (let i = 0; i < originalYao.length; i++) {
+                        if (originalYao[i] != 6 && originalYao[i] != 9) {
+                            dongYaoIdx = i;
+                            break;
+                        }
+                    }
+                    break;
+            }
+
+
+            reserseYaoForZong.forEach((item, i) => {
+                if (i <= 2) {
+                    zongxia = (zongxia << 1) | (item % 2 === 1 ? 0 : 1);
+                } else {
+                    zongshang = (zongshang << 1) | (item % 2 === 1 ? 0 : 1);
+                }
+            });
+
+            huguayao.forEach((item, i) => {
+                if (i <= 2) {
+                    huxia = (huxia << 1) | (item % 2 === 1 ? 0 : 1);
+                } else {
+                    hushang = (hushang << 1) | (item % 2 === 1 ? 0 : 1);
+                }
+            });
+
+
+
+            const jsonData = document.getElementById('zhouyi-data').textContent;
+            const dangua = JSON.parse(jsonData).dangua;
+            const chonggua = JSON.parse(jsonData).chonggua;
+
+            benxia = dangua[benxia].name;
+            benshang = dangua[benshang].name;
+
+            huxia = dangua[huxia].name;
+            hushang = dangua[hushang].name;
+
+            cuoxia = dangua[cuoxia].name;
+            cuoshang = dangua[cuoshang].name;
+
+            zongxia = dangua[zongxia].name;
+            zongshang = dangua[zongshang].name;
+
+            bianxia = dangua[bianxia].name;
+            bianshang = dangua[bianshang].name;
+
+
+            var dongYao;
+            var dongshang;
+            var dongxia;
+            var dong;
+            if (dongYaoCount > 0) {
+                if (dongYaoCount < 6) {
+                    dongYao = originalYao.slice();
+                    dongYao[dongYaoIdx]--;
+
+                    dongYao.forEach((item, i) => {
+                        if (i <= 2) {
+                            dongxia = (dongxia << 1) | (item % 2 === 1 ? 0 : 1);
+                        } else {
+                            dongshang = (dongshang << 1) | (item % 2 === 1 ? 0 : 1);
+                        }
+                    });
+                    dongshang = dangua[dongshang].name;
+                    dongxia = dangua[dongxia].name;
+                }
+
+
+            }
+
+            var ben = "";
+            var hu = "";
+            var cuo = "";
+            var zong = "";
+
+            var bian = "";
+
+            chonggua.forEach(e => {
+                if (e.up === benshang && e.down === benxia) {
+                    ben = e;
+                }
+                if (e.up === hushang && e.down === huxia) {
+                    hu = e;
+                }
+                if (e.up === cuoshang && e.down === cuoxia) {
+                    cuo = e;
+                }
+                if (e.up === zongshang && e.down === zongxia) {
+                    zong = e;
+                }
+                if (e.up === bianshang && e.down === bianxia) {
+                    bian = e;
+                }
+            })
+
+            chonggua.forEach(e => {
+                if (dongYaoCount === 6 && ben.name != "乾" && ben.name != "坤" && e.name === ben.gong) {
+                    dong = e;
+                } else if (dongYaoCount > 0 && dongYaoCount < 6) {
+                    if (e.up === dongshang && e.down === dongxia) {
+                        dong = e;
+                    }
+                }
+            })
+
+            alert(ben.fullname);
+
+            function display(gua, isBen) {
+                dis = gua.text.slice();
+                if (isBen) {
+
+                    if (dongYaoCount != 6) {
+                        dis[dongYaoIdx + 1] = '<b>' + dis[dongYaoIdx + 1] + '<\/b>';
+                    } else {
+                        if (gua.name === "乾" || gua.name === "坤") {
+                            dis[7] = '<b>' + dis[7] + '<\/b>';
+                        } else {
+                            dis.push("<b>(六爻皆动取挂宫彖辞)<\/b>");
+                        }
+                    }
+                }
+
+                document.getElementById('original-context').innerHTML = '<br><br><p style=\"font-size: 28px;\"><b>' + gua.fullname + '<br><\/b></p><p style=\"font-size: 48px;\"><b>'
+                    + gua.symbol + '<\/b></p><br>'
+                    + dis.join('<br>')
+                    + '<br><br><a href=\"' + gua.nanhuaijin + '\" target=\"_blank\" style=\"text-decoration: none; color: inherit;\" onclick=\"this.style.textDecoration=\'underline\';\">南怀瑾《白话易经》解卦<\/a><br><br><a href=\"'
+                    + gua.yibuju + '\" target=\"_blank\" style=\"text-decoration: none; color: inherit;\" onclick=\"this.style.textDecoration=\'underline\';\">其他解卦参考<\/a><br><br><br><br>';
+            }
+
+
+            result = document.getElementById('result');
+            result.innerHTML = '';
+            document.getElementById('original-context').innerHTML = "";
+            var buttonBen = document.createElement("button");
+            buttonBen.textContent = "本卦: " + ben.name;
+            buttonBen.title = "本卦代表的是目前的情况";
+            buttonBen.addEventListener("click", () => display(ben, true));
+            result.appendChild(buttonBen);
+
+            var buttonHu = document.createElement("button");
+            buttonHu.textContent = "互卦: " + hu.name;
+            buttonHu.title = "由本卦的两个内卦组合而成的，互卦为事情发展的过程";
+            buttonHu.addEventListener("click", () => display(hu, false));
+            result.appendChild(buttonHu);
+
+            var buttonCuo = document.createElement("button");
+            buttonCuo.textContent = "错卦: " + cuo.name;
+            buttonCuo.title = "是与本卦阴阳全颠倒的卦，错卦是一种从反面的角度";
+            buttonCuo.addEventListener("click", () => display(cuo, false));
+            result.appendChild(buttonCuo);
+
+            var buttonZong = document.createElement("button");
+            buttonZong.textContent = "综卦: " + zong.name;
+            buttonZong.title = "就是把本卦倒过来看，综卦是从对手角度来思考要测的事情";
+            buttonZong.addEventListener("click", () => display(zong, false));
+            result.appendChild(buttonZong);
+
+
+
+            if (dongYaoCount != 0) {
+                if (dongYaoCount < 6) {
+                    var buttonBian = document.createElement("button");
+                    buttonBian.textContent = "全部变爻产生的变卦: " + bian.name;
+                    buttonBian.title = "是由本卦经过某个爻的变动、变化而得到的，变卦为事情发展的结果，这里是所有爻动之后的卦";
+                    buttonBian.addEventListener("click", () => display(bian, false));
+                    result.appendChild(buttonBian);
+
+                }
+
+                var buttonYaoDong = document.createElement("button");
+                buttonYaoDong.textContent = "爻动变卦：" + dong.name;
+                buttonYaoDong.title = "爻动之后的卦，需要具体看爻辞";
+                buttonYaoDong.addEventListener("click", () => display(dong, false));
+                result.appendChild(buttonYaoDong);
+            }
+
+
+        }
+
+        function clearSelections() {
+            const selects = document.querySelectorAll('select');
+            for (let select of selects) {
+                select.value = "";
+            }
+            document.getElementById('result').innerHTML = "";
+            document.getElementById('original-context').innerHTML = "";
+        }
+
+    </script>
+</head>
+
+<body>
+    <h1>六爻起卦占卜</h1>
+    <table>
+        <tr>
+            <th>抛三个相同硬币</th>
+            <th>抛硬币结果</th>
+        </tr>
+        <tr>
+            <td>第一次</td>
+            <td>
+                <select>
+                    <option value=""></option>
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </select>个阳面朝上
+            </td>
+        </tr>
+        <tr>
+            <td>第二次</td>
+            <td>
+                <select>
+                    <option value=""></option>
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </select>个阳面朝上
+            </td>
+        </tr>
+        <tr>
+            <td>第三次</td>
+            <td>
+                <select>
+                    <option value=""></option>
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </select>个阳面朝上
+            </td>
+        </tr>
+        <tr>
+            <td>第四次</td>
+            <td>
+                <select>
+                    <option value=""></option>
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </select>个阳面朝上
+            </td>
+        </tr>
+        <tr>
+            <td>第五次</td>
+            <td>
+                <select>
+                    <option value=""></option>
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </select>个阳面朝上
+            </td>
+        </tr>
+        <tr>
+            <td>第六次</td>
+            <td>
+                <select>
+                    <option value=""></option>
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </select>个阳面朝上
+            </td>
+        </tr>
+    </table>
+    <br>
+    <div class="button-container">
+        <button onclick="validateAndSubmit()">开始计算</button>
+        <button onclick="clearSelections()">清除结果</button>
+    </div>
+    <div id="result"></div>
+    <div id="original-context"></div>
+</body>
+
+</html>
