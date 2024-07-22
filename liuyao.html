@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>六爻起卦占卜</title>
+    <title>周易占卜-铜钱六爻法起卦</title>
     <style>
         body {
             text-align: center;
@@ -157,8 +157,28 @@
             });
 
 
+            var jsonData;
+            // const jsonData = document.getElementById('zhouyi-data').textContent;
+            async function fetchJSON() {
+            try {
+                const response = await fetch('zhouyi');
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                return data;
+            } catch (error) {
+                console.error('There has been a problem with your fetch operation:', error);
+            }
+        }
 
-            const jsonData = document.getElementById('zhouyi-data').textContent;
+        // Call the function and use the returned JSON data
+        fetchJSON().then(data => {
+            if (data) {
+                jsonData = data;
+            }
+        });
+
             const dangua = JSON.parse(jsonData).dangua;
             const chonggua = JSON.parse(jsonData).chonggua;
 
@@ -323,7 +343,7 @@
 </head>
 
 <body>
-    <h1>六爻起卦占卜</h1>
+    <h1>铜钱六爻法起卦</h1>
     <table>
         <tr>
             <th>抛三个相同硬币</th>
