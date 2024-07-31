@@ -175,8 +175,8 @@
             fetchJSON().then(jsonData => {
                 if (jsonData) {
 
-                    const dangua = JSON.parse(jsonData).dangua;
-                    const chonggua = JSON.parse(jsonData).chonggua;
+                    const dangua = jsonData.dangua;
+                    const chonggua = jsonData.chonggua;
 
                     benxia = dangua[benxia].name;
                     benshang = dangua[benshang].name;
