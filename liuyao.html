@@ -160,172 +160,173 @@
             var jsonData;
             // const jsonData = document.getElementById('zhouyi-data').textContent;
             async function fetchJSON() {
-            try {
-                const response = await fetch('zhouyi');
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                const data = await response.json();
-                return data;
-            } catch (error) {
-                console.error('There has been a problem with your fetch operation:', error);
-            }
-        }
-
-        // Call the function and use the returned JSON data
-        fetchJSON().then(data => {
-            if (data) {
-                jsonData = data;
-            }
-        });
-
-            const dangua = JSON.parse(jsonData).dangua;
-            const chonggua = JSON.parse(jsonData).chonggua;
-
-            benxia = dangua[benxia].name;
-            benshang = dangua[benshang].name;
-
-            huxia = dangua[huxia].name;
-            hushang = dangua[hushang].name;
-
-            cuoxia = dangua[cuoxia].name;
-            cuoshang = dangua[cuoshang].name;
-
-            zongxia = dangua[zongxia].name;
-            zongshang = dangua[zongshang].name;
-
-            bianxia = dangua[bianxia].name;
-            bianshang = dangua[bianshang].name;
-
-
-            var dongYao;
-            var dongshang;
-            var dongxia;
-            var dong;
-            if (dongYaoCount > 0) {
-                if (dongYaoCount < 6) {
-                    dongYao = originalYao.slice();
-                    dongYao[dongYaoIdx]--;
-
-                    dongYao.forEach((item, i) => {
-                        if (i <= 2) {
-                            dongxia = (dongxia << 1) | (item % 2 === 1 ? 0 : 1);
-                        } else {
-                            dongshang = (dongshang << 1) | (item % 2 === 1 ? 0 : 1);
-                        }
-                    });
-                    dongshang = dangua[dongshang].name;
-                    dongxia = dangua[dongxia].name;
-                }
-
-
-            }
-
-            var ben = "";
-            var hu = "";
-            var cuo = "";
-            var zong = "";
-
-            var bian = "";
-
-            chonggua.forEach(e => {
-                if (e.up === benshang && e.down === benxia) {
-                    ben = e;
-                }
-                if (e.up === hushang && e.down === huxia) {
-                    hu = e;
-                }
-                if (e.up === cuoshang && e.down === cuoxia) {
-                    cuo = e;
-                }
-                if (e.up === zongshang && e.down === zongxia) {
-                    zong = e;
-                }
-                if (e.up === bianshang && e.down === bianxia) {
-                    bian = e;
-                }
-            })
-
-            chonggua.forEach(e => {
-                if (dongYaoCount === 6 && ben.name != "乾" && ben.name != "坤" && e.name === ben.gong) {
-                    dong = e;
-                } else if (dongYaoCount > 0 && dongYaoCount < 6) {
-                    if (e.up === dongshang && e.down === dongxia) {
-                        dong = e;
+                try {
+                    const response = await fetch('zhouyi');
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
                     }
+                    const data = await response.json();
+                    return data;
+                } catch (error) {
+                    console.error('There has been a problem with your fetch operation:', error);
                 }
-            })
+            }
 
-            alert(ben.fullname);
+            // Call the function and use the returned JSON data
+            fetchJSON().then(data => {
+                if (data) {
+                    jsonData = data;
 
-            function display(gua, isBen) {
-                dis = gua.text.slice();
-                if (isBen) {
+                    const dangua = JSON.parse(jsonData).dangua;
+                    const chonggua = JSON.parse(jsonData).chonggua;
 
-                    if (dongYaoCount != 6) {
-                        dis[dongYaoIdx + 1] = '<b>' + dis[dongYaoIdx + 1] + '<\/b>';
-                    } else {
-                        if (gua.name === "乾" || gua.name === "坤") {
-                            dis[7] = '<b>' + dis[7] + '<\/b>';
-                        } else {
-                            dis.push("<b>(六爻皆动取挂宫彖辞)<\/b>");
+                    benxia = dangua[benxia].name;
+                    benshang = dangua[benshang].name;
+
+                    huxia = dangua[huxia].name;
+                    hushang = dangua[hushang].name;
+
+                    cuoxia = dangua[cuoxia].name;
+                    cuoshang = dangua[cuoshang].name;
+
+                    zongxia = dangua[zongxia].name;
+                    zongshang = dangua[zongshang].name;
+
+                    bianxia = dangua[bianxia].name;
+                    bianshang = dangua[bianshang].name;
+
+
+                    var dongYao;
+                    var dongshang;
+                    var dongxia;
+                    var dong;
+                    if (dongYaoCount > 0) {
+                        if (dongYaoCount < 6) {
+                            dongYao = originalYao.slice();
+                            dongYao[dongYaoIdx]--;
+
+                            dongYao.forEach((item, i) => {
+                                if (i <= 2) {
+                                    dongxia = (dongxia << 1) | (item % 2 === 1 ? 0 : 1);
+                                } else {
+                                    dongshang = (dongshang << 1) | (item % 2 === 1 ? 0 : 1);
+                                }
+                            });
+                            dongshang = dangua[dongshang].name;
+                            dongxia = dangua[dongxia].name;
                         }
+
+
                     }
+
+                    var ben = "";
+                    var hu = "";
+                    var cuo = "";
+                    var zong = "";
+
+                    var bian = "";
+
+                    chonggua.forEach(e => {
+                        if (e.up === benshang && e.down === benxia) {
+                            ben = e;
+                        }
+                        if (e.up === hushang && e.down === huxia) {
+                            hu = e;
+                        }
+                        if (e.up === cuoshang && e.down === cuoxia) {
+                            cuo = e;
+                        }
+                        if (e.up === zongshang && e.down === zongxia) {
+                            zong = e;
+                        }
+                        if (e.up === bianshang && e.down === bianxia) {
+                            bian = e;
+                        }
+                    })
+
+                    chonggua.forEach(e => {
+                        if (dongYaoCount === 6 && ben.name != "乾" && ben.name != "坤" && e.name === ben.gong) {
+                            dong = e;
+                        } else if (dongYaoCount > 0 && dongYaoCount < 6) {
+                            if (e.up === dongshang && e.down === dongxia) {
+                                dong = e;
+                            }
+                        }
+                    })
+
+                    alert(ben.fullname);
+
+                    function display(gua, isBen) {
+                        dis = gua.text.slice();
+                        if (isBen) {
+
+                            if (dongYaoCount != 6) {
+                                dis[dongYaoIdx + 1] = '<b>' + dis[dongYaoIdx + 1] + '<\/b>';
+                            } else {
+                                if (gua.name === "乾" || gua.name === "坤") {
+                                    dis[7] = '<b>' + dis[7] + '<\/b>';
+                                } else {
+                                    dis.push("<b>(六爻皆动取挂宫彖辞)<\/b>");
+                                }
+                            }
+                        }
+
+                        document.getElementById('original-context').innerHTML = '<br><br><p style=\"font-size: 28px;\"><b>' + gua.fullname + '<br><\/b></p><p style=\"font-size: 48px;\"><b>'
+                            + gua.symbol + '<\/b></p><br>'
+                            + dis.join('<br>')
+                            + '<br><br><a href=\"' + gua.nanhuaijin + '\" target=\"_blank\" style=\"text-decoration: none; color: inherit;\" onclick=\"this.style.textDecoration=\'underline\';\">南怀瑾《白话易经》解卦<\/a><br><br><a href=\"'
+                            + gua.yibuju + '\" target=\"_blank\" style=\"text-decoration: none; color: inherit;\" onclick=\"this.style.textDecoration=\'underline\';\">其他解卦参考<\/a><br><br><br><br>';
+                    }
+
+
+                    result = document.getElementById('result');
+                    result.innerHTML = '';
+                    document.getElementById('original-context').innerHTML = "";
+                    var buttonBen = document.createElement("button");
+                    buttonBen.textContent = "本卦: " + ben.name;
+                    buttonBen.title = "本卦代表的是目前的情况";
+                    buttonBen.addEventListener("click", () => display(ben, true));
+                    result.appendChild(buttonBen);
+
+                    var buttonHu = document.createElement("button");
+                    buttonHu.textContent = "互卦: " + hu.name;
+                    buttonHu.title = "由本卦的两个内卦组合而成的，互卦为事情发展的过程";
+                    buttonHu.addEventListener("click", () => display(hu, false));
+                    result.appendChild(buttonHu);
+
+                    var buttonCuo = document.createElement("button");
+                    buttonCuo.textContent = "错卦: " + cuo.name;
+                    buttonCuo.title = "是与本卦阴阳全颠倒的卦，错卦是一种从反面的角度";
+                    buttonCuo.addEventListener("click", () => display(cuo, false));
+                    result.appendChild(buttonCuo);
+
+                    var buttonZong = document.createElement("button");
+                    buttonZong.textContent = "综卦: " + zong.name;
+                    buttonZong.title = "就是把本卦倒过来看，综卦是从对手角度来思考要测的事情";
+                    buttonZong.addEventListener("click", () => display(zong, false));
+                    result.appendChild(buttonZong);
+
+
+
+                    if (dongYaoCount != 0) {
+                        if (dongYaoCount < 6) {
+                            var buttonBian = document.createElement("button");
+                            buttonBian.textContent = "全部变爻产生的变卦: " + bian.name;
+                            buttonBian.title = "是由本卦经过某个爻的变动、变化而得到的，变卦为事情发展的结果，这里是所有爻动之后的卦";
+                            buttonBian.addEventListener("click", () => display(bian, false));
+                            result.appendChild(buttonBian);
+
+                        }
+
+                        var buttonYaoDong = document.createElement("button");
+                        buttonYaoDong.textContent = "爻动变卦：" + dong.name;
+                        buttonYaoDong.title = "爻动之后的卦，需要具体看爻辞";
+                        buttonYaoDong.addEventListener("click", () => display(dong, false));
+                        result.appendChild(buttonYaoDong);
+                    }
+
                 }
-
-                document.getElementById('original-context').innerHTML = '<br><br><p style=\"font-size: 28px;\"><b>' + gua.fullname + '<br><\/b></p><p style=\"font-size: 48px;\"><b>'
-                    + gua.symbol + '<\/b></p><br>'
-                    + dis.join('<br>')
-                    + '<br><br><a href=\"' + gua.nanhuaijin + '\" target=\"_blank\" style=\"text-decoration: none; color: inherit;\" onclick=\"this.style.textDecoration=\'underline\';\">南怀瑾《白话易经》解卦<\/a><br><br><a href=\"'
-                    + gua.yibuju + '\" target=\"_blank\" style=\"text-decoration: none; color: inherit;\" onclick=\"this.style.textDecoration=\'underline\';\">其他解卦参考<\/a><br><br><br><br>';
-            }
-
-
-            result = document.getElementById('result');
-            result.innerHTML = '';
-            document.getElementById('original-context').innerHTML = "";
-            var buttonBen = document.createElement("button");
-            buttonBen.textContent = "本卦: " + ben.name;
-            buttonBen.title = "本卦代表的是目前的情况";
-            buttonBen.addEventListener("click", () => display(ben, true));
-            result.appendChild(buttonBen);
-
-            var buttonHu = document.createElement("button");
-            buttonHu.textContent = "互卦: " + hu.name;
-            buttonHu.title = "由本卦的两个内卦组合而成的，互卦为事情发展的过程";
-            buttonHu.addEventListener("click", () => display(hu, false));
-            result.appendChild(buttonHu);
-
-            var buttonCuo = document.createElement("button");
-            buttonCuo.textContent = "错卦: " + cuo.name;
-            buttonCuo.title = "是与本卦阴阳全颠倒的卦，错卦是一种从反面的角度";
-            buttonCuo.addEventListener("click", () => display(cuo, false));
-            result.appendChild(buttonCuo);
-
-            var buttonZong = document.createElement("button");
-            buttonZong.textContent = "综卦: " + zong.name;
-            buttonZong.title = "就是把本卦倒过来看，综卦是从对手角度来思考要测的事情";
-            buttonZong.addEventListener("click", () => display(zong, false));
-            result.appendChild(buttonZong);
-
-
-
-            if (dongYaoCount != 0) {
-                if (dongYaoCount < 6) {
-                    var buttonBian = document.createElement("button");
-                    buttonBian.textContent = "全部变爻产生的变卦: " + bian.name;
-                    buttonBian.title = "是由本卦经过某个爻的变动、变化而得到的，变卦为事情发展的结果，这里是所有爻动之后的卦";
-                    buttonBian.addEventListener("click", () => display(bian, false));
-                    result.appendChild(buttonBian);
-
-                }
-
-                var buttonYaoDong = document.createElement("button");
-                buttonYaoDong.textContent = "爻动变卦：" + dong.name;
-                buttonYaoDong.title = "爻动之后的卦，需要具体看爻辞";
-                buttonYaoDong.addEventListener("click", () => display(dong, false));
-                result.appendChild(buttonYaoDong);
-            }
+            });
 
 
         }
