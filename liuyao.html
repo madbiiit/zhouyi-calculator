@@ -157,7 +157,6 @@
             });
 
 
-            var jsonData;
             // const jsonData = document.getElementById('zhouyi-data').textContent;
             async function fetchJSON() {
                 try {
@@ -173,9 +172,8 @@
             }
 
             // Call the function and use the returned JSON data
-            fetchJSON().then(data => {
-                if (data) {
-                    jsonData = data;
+            fetchJSON().then(jsonData => {
+                if (jsonData) {
 
                     const dangua = JSON.parse(jsonData).dangua;
                     const chonggua = JSON.parse(jsonData).chonggua;
