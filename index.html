@@ -1,10 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>周易占卜</title>
+    <title>周易占卜 - 在线六爻铜钱起卦与揲蓍法排盘计算器</title>
+    <meta name="description" content="免费在线周易占卜工具，支持铜钱六爻法和揲蓍法起卦，自动推算本卦、互卦、错卦、综卦、变卦及爻动变卦，并附南怀瑾《白话易经》解卦参考。">
+    <meta name="keywords" content="周易,易经,占卜,六爻,铜钱起卦,揲蓍法,起卦,排盘,卦象,解卦">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="./">
+
+    <!-- 社交分享 / Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="周易占卜">
+    <meta property="og:title" content="周易占卜 - 在线六爻铜钱与揲蓍法起卦计算器">
+    <meta property="og:description" content="免费在线周易起卦排盘，自动推算本卦、互卦、错卦、综卦、变卦及爻动变卦。">
+    <meta property="og:locale" content="zh_CN">
+    <meta name="twitter:card" content="summary">
+
+    <!-- 结构化数据 / JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "周易占卜计算器",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "Web",
+      "inLanguage": "zh-CN",
+      "offers": {"@type": "Offer", "price": "0", "priceCurrency": "CNY"},
+      "description": "在线周易占卜工具，支持铜钱六爻法和揲蓍法起卦，自动推算本卦、互卦、错卦、综卦、变卦及爻动变卦。"
+    }
+    </script>
     <style>
         body {
             text-align: center;
@@ -21,15 +47,68 @@
 </head>
 
 <body>
-    <h1>欢迎使用周易占卜</h1>
+    <header>
+        <h1>欢迎使用周易占卜</h1>
+        <p>免费在线《易经》起卦排盘工具，选择下方任一起卦方式即可自动推算卦象与解卦。</p>
+    </header>
     <br>
-    <form action="liuyao.html">
-        <button type="submit">铜钱六爻起卦</button>
-    </form>
-    <br><br>
-    <form action="shicao.html">
-        <button type="submit">揲蓍法起卦</button>
-    </form>
+    <nav aria-label="起卦方式">
+        <form action="liuyao.html">
+            <button type="submit">铜钱六爻起卦</button>
+        </form>
+        <br><br>
+        <form action="shicao.html">
+            <button type="submit">揲蓍法起卦</button>
+        </form>
+    </nav>
+
+    <main style="max-width: 720px; margin: 40px auto; text-align: left; line-height: 1.8; padding: 0 16px;">
+        <section>
+            <h2>什么是周易占卜？</h2>
+            <p>周易占卜是依据《易经》六十四卦进行的传统预测方法。通过起卦得到由六个爻组成的卦象，再结合卦辞、爻辞来解读所问之事。本工具提供两种主流起卦方式，并自动推算本卦、互卦、错卦、综卦、变卦及爻动变卦。</p>
+        </section>
+        <section>
+            <h2>两种起卦方式</h2>
+            <ul>
+                <li><strong>铜钱六爻法</strong>：抛掷三枚相同铜钱共六次，根据每次正反面的组合确定一爻的老阴、少阳、少阴或老阳，从下往上排成一卦，是最常用的快速起卦方法。</li>
+                <li><strong>揲蓍法</strong>：用五十根蓍草按古法分而数之，经十八变得出一卦，是《易经·系辞》记载的最古老、最正式的起卦方式。</li>
+            </ul>
+        </section>
+        <section>
+            <h2>常见问题</h2>
+            <h3>本卦、变卦、互卦有什么区别？</h3>
+            <p>本卦代表当前的情况；变卦由动爻变化而来，代表事情发展的结果；互卦由本卦内部的爻重新组合而成，代表事情发展的过程。</p>
+            <h3>错卦和综卦是什么？</h3>
+            <p>错卦是把本卦每一爻的阴阳全部颠倒，代表从反面角度看待问题；综卦是把本卦整体上下倒过来看，代表从对方或对手的角度思考。</p>
+            <h3>什么是动爻？</h3>
+            <p>动爻指起卦时得到老阴（数字6）或老阳（数字9）的爻，它们处于将变未变的状态，是判断卦象变化与吉凶的关键。</p>
+        </section>
+    </main>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "inLanguage": "zh-CN",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "本卦、变卦、互卦有什么区别？",
+          "acceptedAnswer": {"@type": "Answer", "text": "本卦代表当前的情况；变卦由动爻变化而来，代表事情发展的结果；互卦由本卦内部的爻重新组合而成，代表事情发展的过程。"}
+        },
+        {
+          "@type": "Question",
+          "name": "错卦和综卦是什么？",
+          "acceptedAnswer": {"@type": "Answer", "text": "错卦是把本卦每一爻的阴阳全部颠倒，代表从反面角度看待问题；综卦是把本卦整体上下倒过来看，代表从对方或对手的角度思考。"}
+        },
+        {
+          "@type": "Question",
+          "name": "什么是动爻？",
+          "acceptedAnswer": {"@type": "Answer", "text": "动爻指起卦时得到老阴（数字6）或老阳（数字9）的爻，它们处于将变未变的状态，是判断卦象变化与吉凶的关键。"}
+        }
+      ]
+    }
+    </script>
 </body>
 
 </html>
